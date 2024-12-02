@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+
 // Advent of Code 2024: https://adventofcode.com/2024/day/1
 // Day 1: Historian Hysteria
 class Program
@@ -24,6 +26,7 @@ class Program
         }
         
         Console.WriteLine($"Total distance: {CalculateDistance(col1, col2)}");
+        Console.WriteLine($"Total similarity score: {CalculateSimilarityScore(col1, col2)}");
  
     }
 
@@ -67,5 +70,22 @@ class Program
         }
         
         return distance;
+    }
+    
+    
+    
+    // total similarity score =
+    //      addition of all left numbers * number of times found in right
+    static int CalculateSimilarityScore(List<int> col1, List<int> col2)
+    {
+        int similarityScore = 0;
+        for (int i = 0; i < col1.Count; i++)
+        {
+            // how often do left locations appear in right locations
+            int count = col2.Count(x => x == col1[i]);
+            similarityScore += (col1[i] * count);
+        }
+
+        return similarityScore;
     }
 }

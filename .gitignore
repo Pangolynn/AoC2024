@@ -1,0 +1,45 @@
+﻿# Build artifacts
+bin/
+obj/
+out/
+*.exe
+*.dll
+*.pdb
+*.cache
+
+# User-specific files
+.vs/
+*.user
+*.userosscache
+*.suo
+
+# Rider IDE files
+.idea/
+*.iml
+
+# Logs
+*.log
+
+# Dependency caches
+*.lock
+*.cache/
+*.npm
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+
+# Generated files
+*.g.cs
+*.g.i.cs
+*.Designer.cs
+
+# macOS files
+.DS_Store
+
+# Environment secrets
+secrets.json
+
+# Other
+launchSettings.json
