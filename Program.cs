@@ -47,6 +47,11 @@ class Program
         Console.WriteLine($"Total number of safe reports: {numberOfSafeReports}");
         
         // -- End Day 2 --
+        
+        // -- Start Day 3 --
+        MullItOver m1 = new MullItOver();
+        Console.WriteLine($"The sum of all muls is : {m1.GetSum()}");
+        // -- End Day 3
     }
 
     static (List<int>, List<int>) ReadColumnsFromFile(string filePath)
