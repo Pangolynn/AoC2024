@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
+
 // Advent of Code 2024: https://adventofcode.com/2024/day/1
 // Day 1: Historian Hysteria
 class Program
 {
     static void Main(string[] args)
     {
+        // -- Start Day 1 --
         string filePath = "input.txt";
         
         if (!File.Exists(filePath))
@@ -16,7 +18,7 @@ class Program
             Console.WriteLine("File not found.");
             return;
         }
-
+        
         (List<int> col1, List<int> col2) = ReadColumnsFromFile(filePath);
         
         if (col1.Count != col2.Count)
@@ -27,7 +29,24 @@ class Program
         
         Console.WriteLine($"Total distance: {CalculateDistance(col1, col2)}");
         Console.WriteLine($"Total similarity score: {CalculateSimilarityScore(col1, col2)}");
- 
+        
+        // -- End Day 1 --
+        
+        // -- Start Day 2 --
+
+        RedNosedReports reports = new RedNosedReports();
+        List<List<int>> listOfReports = reports.GetReports();
+        int numberOfSafeReports = 0;
+        foreach (List<int> report in listOfReports)
+        {
+            if (reports.CheckReportSafety(report))
+            {
+                numberOfSafeReports++;
+            }
+        }
+        Console.WriteLine($"Total number of safe reports: {numberOfSafeReports}");
+        
+        // -- End Day 2 --
     }
 
     static (List<int>, List<int>) ReadColumnsFromFile(string filePath)
