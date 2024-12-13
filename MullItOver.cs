@@ -10,8 +10,8 @@ using System.Text.RegularExpressions;
 
 class MullItOver
 {
-    private string _fileName = "test.txt";
-    private List<string> _corruptedInput = new();
+    private string _fileName = "day3input.txt";
+    private string _corruptedInput = "";
     // mul is matched easily, then use \ to escape the ( match
     // then we group the number matches ([0-9]{1,3})
     // then a comma, then the 2nd number match ([0-9]{1,3})
@@ -24,6 +24,7 @@ class MullItOver
     // part 2
     private string _doPattern = @"do\(\)";
     private string _dontPattern = @"don't\(\)";
+    private string _dontDoPattern = @"don't\(\).*?do\(\)";
 
     public MullItOver()
     {
@@ -33,32 +34,56 @@ class MullItOver
         }
 
         GetInput();
-        foreach (string line in _corruptedInput)
-        {
-            PurifyInput(line);
-        }
+        PurifyInput(_corruptedInput);
+
+        // foreach (string line in _corruptedInput)
+        // {
+        //     PurifyInput(line);
+        // }
         
     }
 
     private void GetInput()
     {
-        foreach (string line in File.ReadLines(_fileName))
+        try
         {
-            _corruptedInput.Add(line);
+            _corruptedInput = File.ReadAllText(_fileName);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
         }
     }
 
     private void PurifyInput(string input)
-    {
-        Regex regex = new Regex(_mulPattern);
-        Regex doRegex = new Regex(_doPattern);
-        Regex dontRegex = new Regex(_dontPattern);
+    {   
+        Console.WriteLine("Purifying Input");
         // match values in the form mul(#,#)
-        MatchCollection matches = regex.Matches(input);
-        MatchCollection doMatches = doRegex.Matches(input);
-        MatchCollection dontMatches = dontRegex.Matches(input);
+        Regex regex = new Regex(_mulPattern);
 
-        bool enabled = true;
+        Regex dontDoRegex = new Regex(_dontDoPattern);
+        
+        MatchCollection dontDoMatches = dontDoRegex.Matches(input);
+        int lastIndex = 0;
+
+        
+        string beforeDont = "";
+        string betweenDontDo = "";
+        foreach(Match match in dontDoMatches)
+        {
+            beforeDont += input.Substring(lastIndex, match.Index - lastIndex);
+            betweenDontDo += match.Value;
+            lastIndex = match.Index + match.Length;
+            Console.WriteLine("Before Dont: " + beforeDont + "\n");
+            Console.WriteLine("Between Dont Do: " + betweenDontDo + "\n");
+        }
+
+        string afterDontDo = input.Substring(lastIndex);
+
+        string newInput = beforeDont + afterDontDo;
+        Console.WriteLine("After dont do: " + afterDontDo);
+
+        MatchCollection matches = regex.Matches(newInput);
         
         foreach (Match match in matches)
         {
@@ -71,17 +96,7 @@ class MullItOver
                 _sum += x * y;
             }
         }
-
-        foreach (Match match in doMatches)
-        {
-            Console.WriteLine(match);
-            
-        }
-        foreach (Match match in dontMatches)
-        {
-            Console.WriteLine(match);
-            
-        }
+    
     }
 
     public int GetSum()

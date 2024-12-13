@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+namespace AdventOfCode2024;
 
 
 // Advent of Code 2024: https://adventofcode.com/2024/day/1
@@ -49,9 +50,14 @@ class Program
         // -- End Day 2 --
         
         // -- Start Day 3 --
-        MullItOver m1 = new MullItOver();
-        Console.WriteLine($"The sum of all muls is : {m1.GetSum()}");
+        // MullItOver m1 = new MullItOver();
+        // Console.WriteLine($"The sum of all muls is : {m1.GetSum()}");
         // -- End Day 3
+        
+        // -- Start Day 4 --
+        CeresSearch cs = new CeresSearch();
+        
+        // -- End Day 4 --
     }
 
     static (List<int>, List<int>) ReadColumnsFromFile(string filePath)
